@@ -29,8 +29,8 @@ class AdminMenu
     public static function enqueue_log_scripts( $hook )
     {
         if ( $hook === self::$PLUBO_TOOLS_PAGE && !wp_script_is( self::$PLUBO_HANDLE_NAME ) ) {
-            wp_enqueue_script( self::$PLUBO_HANDLE_NAME, PLUBO_LOGS_ASSETS_URL . 'app.js', [], self::$PLUBO_ADMIN_VERSION );
-            wp_enqueue_style( self::$PLUBO_HANDLE_NAME, PLUBO_LOGS_ASSETS_URL . 'app.css', [], self::$PLUBO_ADMIN_VERSION );
+            wp_enqueue_script( self::$PLUBO_HANDLE_NAME, plugin_dir_url(__FILE__) . 'dist/app.js', [], self::$PLUBO_ADMIN_VERSION );
+            wp_enqueue_style( self::$PLUBO_HANDLE_NAME, plugin_dir_url(__FILE__) . 'dist/app.css', [], self::$PLUBO_ADMIN_VERSION );
 
             $rest_url   = get_rest_url( null, Endpoints::$NAMESPACE );
             $rest_nonce = wp_create_nonce( 'wp_rest' );
