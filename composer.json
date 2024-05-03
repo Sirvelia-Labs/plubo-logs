@@ -13,9 +13,6 @@
       }
     ],
     "autoload": {
-      "files": [
-        "config.php"
-      ],
       "psr-4": {
         "PluboLogs\\": "PluboLogs/"
       }
