@@ -25,7 +25,8 @@ class Logger
      */
     private function init_hooks()
     {
-        add_action( 'init', [ Database::class, 'setup_db' ] );
+        Database::setup_db();
+
         add_action( 'admin_menu', [ AdminMenu::class, 'add_logs_submenu' ] );
         add_action( 'admin_enqueue_scripts', [ AdminMenu::class, 'enqueue_log_scripts' ] );
         add_action( 'rest_api_init', [ Endpoints::class, 'register_log_endpoints' ] );
@@ -38,15 +39,21 @@ class Logger
 
     /**
      * Prepares the log DB Table and the required configuration
+     * 
+     * @var string|false $vendor_path A path to the WordPress vendor directory
      */
-    public static function init()
+    public static function init( $vendor_path = false )
     {
         if ( self::$instance === null ) {
-            self::$instance = new self();
+            self::$instance = new self( $vendor_path );
         }
 
         // Custom action for checker initialization
         do_action( 'plubo/logger_init' );
+
+        if ( $vendor_path ) {
+            define( 'PLUBO_LOG_VENDOR_PATH', $vendor_path );
+        }
 
         return self::$instance;
     }
