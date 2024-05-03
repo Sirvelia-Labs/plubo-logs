@@ -39,21 +39,15 @@ class Logger
 
     /**
      * Prepares the log DB Table and the required configuration
-     * 
-     * @var string|false $vendor_path A path to the WordPress vendor directory
      */
-    public static function init( $vendor_path = false )
+    public static function init()
     {
         if ( self::$instance === null ) {
-            self::$instance = new self( $vendor_path );
+            self::$instance = new self();
         }
 
         // Custom action for checker initialization
         do_action( 'plubo/logger_init' );
-
-        if ( $vendor_path ) {
-            define( 'PLUBO_LOG_VENDOR_PATH', $vendor_path );
-        }
 
         return self::$instance;
     }

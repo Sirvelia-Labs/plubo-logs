@@ -16,6 +16,5 @@
 
 define('PLUBO_LOGS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PLUBO_LOGS_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('PLUBO_LOGS_ASSETS_URL', PLUBO_LOGS_PLUGIN_URL . 'dist/');
 
 require_once PLUBO_LOGS_PLUGIN_DIR . 'vendor/autoload.php';
