@@ -29,9 +29,9 @@ class AdminMenu
     public static function enqueue_log_scripts( $hook )
     {
         if ( $hook === self::$PLUBO_TOOLS_PAGE && !wp_script_is( self::$PLUBO_HANDLE_NAME ) ) {
-            $assets_url = PLUBO_LOGS_ASSETS_URL;
-            if ( defined( 'PLUBO_LOGS_VENDOR_PATH' ) ) {
-                $assets_url = PLUBO_LOGS_VENDOR_PATH;
+            $assets_url = plugin_dir_url( __FILE__ ) . '../dist/';
+            if ( defined( 'PLUBO_LOGS_ASSETS_PATH' ) ) {
+                $assets_url = PLUBO_LOGS_ASSETS_PATH;
             }
 
             wp_enqueue_script( self::$PLUBO_HANDLE_NAME, $assets_url . 'app.js', [], self::$PLUBO_ADMIN_VERSION );
