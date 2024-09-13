@@ -62,77 +62,107 @@ class AdminMenu
     public static function render_logs_page()
     {
         ?>
-            <div x-data="adminLogsData" class="pb-p-8 pb-flex pb-gap-8">
+            <div x-data="adminLogsData" class="pb-p-8 pb-flex pb-flex-col lg:pb-flex-row pb-gap-8" id="poststuff">
                 <div class="pb-w-full pb-max-w-[280px]">
                     <button type="button" class="button button-primary pb-w-full !pb-mb-8" @click="get_logs(true)"><?php esc_html_e( 'Update', 'plubo-logs' ); ?></button>
 
                     <!-- Service Filters -->
-                    <div class="pb-p-8 pb-flex pb-flex-col pb-gap-4 pb-bg-white pb-rounded-xl pb-shadow pb-w-full pb-mb-8 pb-box-border">
-                        <div>
-                            <span class="pb-font-bold pb-text-xl"><?php esc_html_e( 'Service', 'plubo-logs' ); ?></span>
-                            <hr class="pb-border-b pb-border-b-solid pb-border-b-slate-200 pb-m-0">
-                        </div>
-                        <template x-for="service in services">
-                            <div class="pb-flex pb-gap-2 pb-items-baseline">
-                                <input type="checkbox" x-bind:checked="service_filter.includes(service)" @change="toggle_service(service)"/>
-                                <span x-text="service"></span>
+                    <div class="postbox-container">
+                        <div class="stuffbox">
+                            <h2><?php esc_html_e( 'Service', 'plubo-logs' ); ?></h2>
+                            <div class="inside">
+                                <div class="misc-publishing-actions">
+                                    <div class="misc-pub-section">
+                                        <template x-for="service in services">
+                                            <p>
+                                                <input type="checkbox" x-bind:checked="service_filter.includes(service)" @change="toggle_service(service)"/>
+                                                <span x-text="service"></span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
                             </div>
-                        </template>
+                        </div>
                     </div>
 
                     <!-- Status Filters -->
-                    <div class="pb-p-8 pb-flex pb-flex-col pb-gap-4 pb-bg-white pb-rounded-xl pb-shadow pb-w-full pb-mb-8 pb-box-border">
-                        <div>
-                            <span class="pb-font-bold pb-text-xl"><?php esc_html_e( 'Status', 'plubo-logs' ); ?></span>
-                            <hr class="pb-border-b pb-border-b-solid pb-border-b-slate-200 pb-m-0">
-                        </div>
-                        <div class="pb-flex pb-gap-2 pb-items-center">
-                            <input type="checkbox" x-bind:checked="status_filter.includes('error')" @change="toggle_status('error')"/>
-                            <span class="pb-h-5 pb-pl-1 pb-bg-error pb-rounded-full"></span>
-                            <span><?php esc_html_e( 'Error', 'plubo-logs' ); ?></span>
-                        </div>
-                        <div class="pb-flex pb-gap-2 pb-items-center">
-                            <input type="checkbox" x-bind:checked="status_filter.includes('warning')" @change="toggle_status('warning')"/>
-                            <span class="pb-h-5 pb-pl-1 pb-bg-warning pb-rounded-full"></span>
-                            <span><?php esc_html_e( 'Warning', 'plubo-logs' ); ?></span>
-                        </div>
-                        <div class="pb-flex pb-gap-2 pb-items-center">
-                            <input type="checkbox" x-bind:checked="status_filter.includes('log')" @change="toggle_status('log')"/>
-                            <span class="pb-h-5 pb-pl-1 pb-bg-info pb-rounded-full"></span>
-                            <span><?php esc_html_e( 'Info', 'plubo-logs' ); ?></span>
+                    <div class="postbox-container">
+                        <div class="stuffbox">
+                            <h2><?php esc_html_e( 'Status', 'plubo-logs' ); ?></h2>
+                            <div class="inside">
+                                <div class="misc-publishing-actions">
+                                    <div class="misc-pub-section">
+                                        <p>
+                                            <input type="checkbox" x-bind:checked="status_filter.includes('error')" @change="toggle_status('error')"/>
+                                            <span class="pb-h-5 pb-pl-1 pb-mx-2 pb-bg-error pb-rounded-full"></span>
+                                            <span><?php esc_html_e( 'Error', 'plubo-logs' ); ?></span>
+                                        </p>
+                                        <p>
+                                            <input type="checkbox" x-bind:checked="status_filter.includes('warning')" @change="toggle_status('warning')"/>
+                                            <span class="pb-h-5 pb-pl-1 pb-mx-2 pb-bg-warning pb-rounded-full"></span>
+                                            <span><?php esc_html_e( 'Warning', 'plubo-logs' ); ?></span>
+                                        </p>
+                                        <p>
+                                            <input type="checkbox" x-bind:checked="status_filter.includes('log')" @change="toggle_status('log')"/>
+                                            <span class="pb-h-5 pb-pl-1 pb-mx-2 pb-bg-info pb-rounded-full"></span>
+                                            <span><?php esc_html_e( 'Info', 'plubo-logs' ); ?></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Date Filters -->
-                    <div class="pb-p-8 pb-flex pb-flex-col pb-gap-4 pb-bg-white pb-rounded-xl pb-shadow pb-w-full pb-box-border">
-                        <div>
-                            <span class="pb-font-bold pb-text-xl"><?php esc_html_e( 'Date', 'plubo-logs' ); ?></span>
-                            <hr class="pb-border-b pb-border-b-solid pb-border-b-slate-200 pb-m-0">
+                    <div class="postbox-container">
+                        <div class="stuffbox">
+                            <h2><?php esc_html_e( 'Date', 'plubo-logs' ); ?></h2>
+                            <div class="inside">
+                                <div class="misc-publishing-actions">
+                                    <div class="misc-pub-section">
+                                        <select x-model="date_filter">
+                                            <option value=""><?php esc_html_e( 'All', 'plubo-logs' ); ?></option>
+                                            <option value="last_hour"><?php esc_html_e( 'Last Hour', 'plubo-logs' ); ?></option>
+                                            <option value="today"><?php esc_html_e( 'Today', 'plubo-logs' ); ?></option>
+                                            <option value="this_week"><?php esc_html_e( 'This Week', 'plubo-logs' ); ?></option>
+                                            <option value="custom"><?php esc_html_e( 'Custom', 'plubo-logs' ); ?></option>
+                                        </select>
+
+                                        <input x-show="date_filter === 'custom'" x-model="date" type="date" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <select x-model="date_filter">
-                            <option value=""><?php esc_html_e( 'All', 'plubo-logs' ); ?></option>
-                            <option value="last_hour"><?php esc_html_e( 'Last Hour', 'plubo-logs' ); ?></option>
-                            <option value="today"><?php esc_html_e( 'Today', 'plubo-logs' ); ?></option>
-                            <option value="this_week"><?php esc_html_e( 'This Week', 'plubo-logs' ); ?></option>
-                            <option value="custom"><?php esc_html_e( 'Custom', 'plubo-logs' ); ?></option>
-                        </select>
-
-                        <input x-show="date_filter === 'custom'" x-model="date" type="date" />
                     </div>
                 </div>
 
                 <template x-if="!loading">
-                    <div class="pb-p-8 pb-rounded-xl pb-bg-white pb-w-full pb-shadow">
-                        <?php self::render_logs_table(); ?>
+                    <div class="postbox-container">
+                        <div class="stuffbox">
+                            <h2><?php esc_html_e( 'Logs', 'plubo-logs' ); ?></h2>
+                            <div class="inside">
+                                <div class="misc-publishing-actions">
+                                    <div class="misc-pub-section">
+                                        <?php self::render_logs_table(); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
                 <template x-if="loading">
-                    <div class="pb-p-8 pb-rounded-xl pb-bg-white pb-w-full pb-shadow pb-flex pb-flex-col pb-items-center pb-justify-center">
-                        <span class="pb-text-xl pb-flex pb-items-center pb-gap-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader pb-animate-spin pb-h-12 pb-w-12"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
-                            <?php esc_html_e( 'Fetching logs...', 'plubo-logs' ); ?>
-                        </span>
+                    <div class="postbox-container">
+                        <div class="stuffbox">
+                            <h2><?php esc_html_e( 'Logs', 'plubo-logs' ); ?></h2>
+                            <div class="inside">
+                                <div class="misc-publishing-actions">
+                                    <div class="misc-pub-section">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader pb-animate-spin pb-h-4 pb-w-4"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                                        <?php esc_html_e( 'Fetching logs...', 'plubo-logs' ); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -145,31 +175,33 @@ class AdminMenu
     public static function render_logs_table()
     {
         ?>
-            <table class="pb-w-full">
-                <tr class="pb-uppercase pb-text-left pb-outline pb-outline-slate-200 pb-outline-1">
-                    <th></th>
-                    <th><?php esc_html_e( 'Date', 'plubo-logs' ); ?></th>
-                    <th><?php esc_html_e( 'Service', 'plubo-logs' ); ?></th>
-                    <th><?php esc_html_e( 'Content', 'plubo-logs' ); ?></th>
-                    <th><?php esc_html_e( 'File', 'plubo-logs' ); ?></th>
-                    <th><?php esc_html_e( 'Line', 'plubo-logs' ); ?></th>
-                    <th><?php esc_html_e( 'Function', 'plubo-logs' ); ?></th>
-                </tr>
-                <template x-for="log in logs">
-                    <tr class="pb-outline pb-outline-slate-200 pb-outline-1 pb-cursor-pointer hover:pb-bg-slate-100" @click="access_log(log.id)">
-                        <td><span class="pb-h-5 pb-pl-1 pb-rounded-full" :class="{
-                            'pb-bg-error': log.status === 'error',
-                            'pb-bg-warning': log.status === 'warning',
-                            'pb-bg-info': log.status === 'log'
-                        }"></span></td>
-                        <td x-text="log.date"></td>
-                        <td x-text="log.service"></td>
-                        <td class="pb-line-clamp-1 pb-max-w-[200px]" x-text="log.content"></td>
-                        <td x-text="log.backtrace[0].file"></td>
-                        <td x-text="log.backtrace[0].line"></td>
-                        <td x-text="log.backtrace[1].function"></td>
+            <table class="wp-list-table widefat fixed striped table-view-list plugins">
+                <thead>
+                    <tr class="pb-uppercase pb-text-left pb-outline pb-outline-slate-200 pb-outline-1">
+                        <th><?php esc_html_e( 'Date', 'plubo-logs' ); ?></th>
+                        <th><?php esc_html_e( 'Service', 'plubo-logs' ); ?></th>
+                        <th><?php esc_html_e( 'Content', 'plubo-logs' ); ?></th>
+                        <th><?php esc_html_e( 'File', 'plubo-logs' ); ?></th>
+                        <th><?php esc_html_e( 'Line', 'plubo-logs' ); ?></th>
+                        <th><?php esc_html_e( 'Function', 'plubo-logs' ); ?></th>
                     </tr>
-                </template>
+                </thead>
+                <tbody id="the-list">
+                    <template x-for="log in logs">
+                        <tr class="pb-cursor-pointer" :class="{
+                            'active': log.status === 'log',
+                            'warning': log.status === 'warning',
+                            'error': log.status === 'error'
+                        }" @click="access_log(log.id)">
+                            <th scope="row" class="check-column"><p x-text="log.date"></p></th>
+                            <td x-text="log.service"></td>
+                            <td><p class="pb-line-clamp-3" x-text="log.content"></p></td>
+                            <td><p class="pb-line-clamp-3" x-text="log.backtrace[0].file"></p></td>
+                            <td x-text="log.backtrace[0].line"></td>
+                            <td x-text="log.backtrace[1].function"></td>
+                        </tr>
+                    </template>
+                </tbody>
             </table>
         <?php
     }
@@ -190,7 +222,7 @@ class AdminMenu
                 <div class="pb-bg-white pb-p-8 pb-rounded-xl pb-w-auto pb-shadow pb-mt-4">
                     <p class="pb-text-lg pb-m-0 pb-mb-8">
                         <span class="pb-uppercase pb-font-bold pb-p-1 pb-rounded-md <?php
-                            echo ( $log->status === Log::$STATUS_ERROR ) ? 'pb-bg-error' : ( $log->status === Log::$STATUS_WARNING ? 'pb-bg-warning' : 'pb-bg-info' );
+                            echo ( $log->status === Log::$STATUS_ERROR ) ? 'pb-bg-error-clear' : ( $log->status === Log::$STATUS_WARNING ? 'pb-bg-warning-clear' : 'pb-bg-info-clear' );
                         ?>"><?php
                             echo ( $log->status === Log::$STATUS_ERROR ) ? 'error' : ( $log->status === Log::$STATUS_WARNING ? 'warning' : 'info' );
                         ?></span>

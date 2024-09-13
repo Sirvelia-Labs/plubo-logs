@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.plugins .warning td,
+.plugins .warning th {
+    @apply pb-bg-warning-clear;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.plugins .warning th.check-column {
+    @apply pb-border-l-warning;
+    border-left: 4px solid;
+}
+
+.plugins .error td,
+.plugins .error th {
+    @apply pb-bg-error-clear;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.plugins .error th.check-column {
+    @apply pb-border-l-error;
+    border-left: 4px solid;
+}

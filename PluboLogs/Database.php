@@ -82,7 +82,7 @@ class Database
         $filters        = implode( ' AND ', $filters );
 
         $page_offset    = self::$PER_PAGE * $page;
-        $sql            = "SELECT * FROM $db_table_name" . ( $filters ? " WHERE $filters" : '' ) . " LIMIT " . self::$PER_PAGE . " OFFSET $page_offset";
+        $sql            = "SELECT * FROM $db_table_name" . ( $filters ? " WHERE $filters" : '' ) . " ORDER BY date DESC LIMIT " . self::$PER_PAGE . " OFFSET $page_offset";
 
         return $wpdb->get_results( $sql, ARRAY_A );
     }
